@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Wish</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5F6;
+  --teal:#00A9A0;
+  --teal-dark:#00897b;
+  --dark:#3D4F5D;
+  --dark2:#3D4551;
+  --card:#ffffff;
+  --line:#e3e6e8;
+  --muted:#6b7780;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--dark);line-height:1.55;}
+
+/* ====== CONSOLE (só aparece no template, some no arquivo final) ====== */
+.console{background:var(--dark);color:#fff;padding:18px 22px;position:sticky;top:0;z-index:50;box-shadow:0 2px 14px rgba(0,0,0,.18);}
+.console h1{font-size:17px;font-weight:600;margin-bottom:3px;}
+.console p{font-size:12.5px;opacity:.8;margin-bottom:12px;}
+.console-row{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;}
+.console textarea{flex:1;min-width:280px;min-height:74px;border-radius:8px;border:1px solid #5a6b78;background:#34434f;color:#eef3f5;padding:10px 12px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;resize:vertical;}
+.console textarea::placeholder{color:#9fb0ba;}
+.console .btns{display:flex;flex-direction:column;gap:8px;justify-content:flex-start;}
+.console button{border:none;border-radius:8px;padding:10px 16px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;transition:filter .15s;}
+.console button:hover{filter:brightness(1.08);}
+.btn-render{background:var(--teal);color:#fff;}
+.btn-download{background:#ffb300;color:#3a2e00;}
+.btn-pdf{background:#fff;color:var(--dark);}
+.console .msg{font-size:12px;margin-top:8px;min-height:16px;}
+.console .msg.ok{color:#7ee0c0;}
+.console .msg.err{color:#ff9a8a;}
+.console .hint{font-size:11.5px;opacity:.7;margin-top:8px;line-height:1.5;}
+.console .hint code{background:#34434f;padding:1px 6px;border-radius:4px;}
+
+/* ====== PÁGINA DA ATIVIDADE ====== */
+.page{max-width:880px;margin:0 auto;padding:30px 24px 60px;}
+
+/* Cabeçalho */
+.lesson-header{background:linear-gradient(135deg,var(--teal),var(--dark));color:#fff;border-radius:16px;padding:28px 34px;margin-bottom:26px;box-shadow:0 4px 18px rgba(0,0,0,.10);}
+.lesson-header .student-line{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.lesson-header .student-name{background:rgba(255,255,255,.95);color:var(--dark);font-weight:700;font-size:15px;padding:5px 16px;border-radius:20px;letter-spacing:.2px;}
+.lesson-header .date{font-size:13px;opacity:.85;font-weight:400;margin-left:auto;}
+.lesson-header h2{font-size:27px;font-weight:700;line-height:1.2;margin-bottom:12px;}
+.lesson-header .sub{display:flex;flex-wrap:wrap;gap:9px;}
+.lesson-header .chip{background:rgba(255,255,255,.2);padding:6px 14px;border-radius:20px;font-size:13.5px;font-weight:500;}
+
+/* Box de atividade (padrão do deck: cartão branco, borda teal no topo) */
+.activity{background:var(--card);border-radius:14px;border-top:4px solid var(--teal);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px 28px;margin-bottom:22px;}
+.activity-num{display:inline-block;background:var(--teal);color:#fff;font-size:12px;font-weight:700;letter-spacing:.5px;padding:3px 12px;border-radius:14px;margin-bottom:12px;text-transform:uppercase;}
+.activity h3{font-size:20px;font-weight:600;color:var(--dark);margin-bottom:5px;}
+.activity .brief{font-size:14px;color:var(--muted);margin-bottom:18px;font-weight:400;}
+
+/* Fill in the blanks */
+.fib-item{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid var(--line);}
+.fib-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.fib-num{font-weight:600;color:var(--teal-dark);margin-right:7px;}
+.fib-cue{display:inline-block;background:#eef6f5;color:var(--teal-dark);font-weight:600;font-size:12px;letter-spacing:.5px;padding:2px 10px;border-radius:5px;margin:4px 0;}
+.fib-line{font-size:16px;line-height:1.9;}
+.blank{display:inline-block;min-width:150px;border:none;border-bottom:2px solid var(--teal);background:#fafdfd;font-family:inherit;font-size:15px;padding:2px 8px;color:var(--dark);}
+.blank:focus{outline:none;background:#f0faf9;border-bottom-color:var(--dark);}
+
+/* Open cloze */
+.cloze{font-size:16px;line-height:2.5;}
+.cloze .gnum{font-size:11px;color:var(--teal-dark);font-weight:700;vertical-align:super;margin-right:1px;}
+.gap{display:inline-block;width:96px;border:none;border-bottom:2px solid var(--teal);background:#fafdfd;text-align:center;font-family:inherit;font-size:15px;padding:2px 4px;margin:0 2px;color:var(--dark);}
+.gap:focus{outline:none;background:#f0faf9;border-bottom-color:var(--dark);}
+
+/* Multiple choice */
+.mc-q{margin-bottom:18px;}
+.mc-q:last-child{margin-bottom:0;}
+.mc-stem{font-weight:500;font-size:15.5px;margin-bottom:9px;}
+.mc-stem .qn{color:var(--teal-dark);font-weight:700;margin-right:6px;}
+.mc-opt{display:block;padding:9px 14px;margin-bottom:7px;border:1.5px solid var(--line);border-radius:9px;cursor:pointer;font-size:15px;transition:all .12s;}
+.mc-opt:hover{border-color:var(--teal);background:#f5fbfb;}
+.mc-opt input{margin-right:10px;accent-color:var(--teal);}
+.mc-opt.picked{border-color:var(--teal);background:#eef6f5;}
+
+/* Reading */
+.reading-text{background:#f7f9fa;border-left:3px solid var(--teal);padding:18px 22px;border-radius:8px;margin-bottom:20px;font-size:15.5px;line-height:1.8;}
+.reading-text p{margin-bottom:13px;}
+.reading-text p:last-child{margin-bottom:0;}
+
+/* Match columns */
+.match-row{display:flex;align-items:center;gap:14px;margin-bottom:11px;}
+.match-left{flex:0 0 46%;background:#f7f9fa;border-radius:8px;padding:11px 15px;font-size:15px;font-weight:500;}
+.match-arrow{color:var(--teal);font-weight:700;font-size:18px;flex:0 0 auto;}
+.match-select{flex:1;border:1.5px solid var(--teal);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:14.5px;background:#fafdfd url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2300A9A0' stroke-width='3'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 12px center;-webkit-appearance:none;appearance:none;color:var(--dark);cursor:pointer;}
+.match-select:focus{outline:none;border-color:var(--dark);}
+
+/* Open response (situação + uma frase) */
+.or-item{margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+.or-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.or-num{font-weight:600;color:var(--teal-dark);margin-right:7px;}
+.or-situation{font-size:15.5px;margin-bottom:9px;line-height:1.6;}
+.or-cue{display:inline-block;background:#eef6f5;color:var(--teal-dark);font-weight:600;font-size:12px;padding:2px 10px;border-radius:5px;margin-left:6px;}
+.or-input{width:100%;border:1.5px solid var(--teal);border-radius:9px;padding:10px 13px;font-family:inherit;font-size:15px;color:var(--dark);background:#fafdfd;}
+.or-input:focus{outline:none;border-color:var(--dark);background:#f0faf9;}
+
+/* Botão salvar PDF (fica na página final) */
+.pdf-bar{text-align:center;margin-top:30px;}
+.btn-savepdf{background:var(--teal);color:#fff;border:none;border-radius:30px;padding:13px 32px;font-family:'Poppins',sans-serif;font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 3px 12px rgba(0,169,160,.3);transition:filter .15s;}
+.btn-savepdf:hover{filter:brightness(1.07);}
+
+.empty-state{text-align:center;color:var(--muted);padding:60px 20px;font-size:15px;}
+.empty-state .big{font-size:40px;margin-bottom:14px;}
+
+/* ====== IMPRESSÃO / SALVAR PDF ====== */
+@media print{
+  @page{margin:14mm;}
+  body{background:#fff;}
+  .console,.pdf-bar,.no-print{display:none !important;}
+  .page{max-width:100%;padding:0;}
+  .activity{box-shadow:none;border:1px solid #ccc;break-inside:avoid;}
+  .lesson-header{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .activity-num,.lesson-header .chip{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  /* dropdowns imprimem a escolha do aluno */
+  .match-select{border:1px solid #999;background:#fff;}
+  .blank,.gap{border-bottom:1px solid #999;}
+}
+</style>
+</head>
+<body>
+<div class="page" id="page"></div>
+<script>
+/* =========================================================================
+   TEMPLATE MASTER — lógica de renderização
+   Lê um objeto JSON e monta as atividades em boxes separados.
+   Tipos suportados: fill_blanks, multiple_choice, open_cloze,
+                     reading_mc, match_columns
+   ========================================================================= */
+
+// ---- utilidades ----
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function getStudentName(){
+  try{
+    const p=new URLSearchParams(window.location.search);
+    const n=p.get('aluno');
+    return n?decodeURIComponent(n).trim():'';
+  }catch(e){return '';}
+}
+
+function getTodayDate(){
+  // data do dispositivo no momento em que o aluno abre o link
+  try{
+    const d=new Date();
+    const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+  }catch(e){return '';}
+}
+
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ---- renderizadores por tipo ----
+function renderFillBlanks(act){
+  let h='';
+  (act.items||[]).forEach((it,i)=>{
+    h+='<div class="fib-item">';
+    h+='<span class="fib-num">'+(i+1)+'.</span>';
+    if(it.prompt) h+='<span class="fib-prompt">'+esc(it.prompt)+'</span>';
+    if(it.cue) h+=' <span class="fib-cue">'+esc(it.cue)+'</span>';
+    // a linha com a lacuna: usa {blank} como marcador, senão põe no fim
+    let line = it.sentence||'';
+    if(line.indexOf('{blank}')>=0){
+      line = esc(line).replace('{blank}','<input class="blank" type="text" aria-label="resposta">');
+    }else{
+      line = esc(line)+' <input class="blank" type="text" aria-label="resposta">';
+    }
+    h+='<div class="fib-line">'+line+'</div>';
+    h+='</div>';
+  });
+  return h;
+}
+
+function renderOpenCloze(act){
+  // act.text com marcadores {1}, {2}... vira lacunas numeradas
+  let t = esc(act.text||'');
+  t = t.replace(/\{(\d+)\}/g,function(_,n){
+    return '<span class="gnum">'+n+'</span><input class="gap" type="text" aria-label="lacuna '+n+'">';
+  });
+  t = t.replace(/\n/g,'<br>');
+  return '<div class="cloze">'+t+'</div>';
+}
+
+function renderMultipleChoice(act){
+  let h='';
+  (act.questions||[]).forEach((q,qi)=>{
+    h+='<div class="mc-q">';
+    h+='<div class="mc-stem"><span class="qn">'+(qi+1)+'.</span>'+esc(q.stem)+'</div>';
+    const name='mc_'+Math.random().toString(36).slice(2,8);
+    const opts = q.shuffle===false ? (q.options||[]) : shuffle(q.options||[]);
+    opts.forEach((opt)=>{
+      h+='<label class="mc-opt"><input type="radio" name="'+name+'" onchange="pick(this)">'+esc(opt)+'</label>';
+    });
+    h+='</div>';
+  });
+  return h;
+}
+
+function renderReadingMC(act){
+  let h='';
+  if(act.text){
+    h+='<div class="reading-text">';
+    String(act.text).split(/\n\n+/).forEach(p=>{ h+='<p>'+esc(p)+'</p>'; });
+    h+='</div>';
+  }
+  h+=renderMultipleChoice({questions:act.questions});
+  return h;
+}
+
+function renderMatchColumns(act){
+  // cada par {left, right}; o dropdown lista todos os "right" embaralhados
+  const pairs = act.pairs||[];
+  const allRight = shuffle(pairs.map(p=>p.right));
+  let h='';
+  pairs.forEach((p,i)=>{
+    h+='<div class="match-row">';
+    h+='<div class="match-left">'+esc(p.left)+'</div>';
+    h+='<span class="match-arrow">→</span>';
+    h+='<select class="match-select" aria-label="par para '+esc(p.left)+'">';
+    h+='<option value="">...</option>';
+    allRight.forEach(r=>{ h+='<option value="'+esc(r)+'">'+esc(r)+'</option>'; });
+    h+='</select>';
+    h+='</div>';
+  });
+  return h;
+}
+
+function renderOpenResponse(act){
+  // cada item é uma situação; o aluno responde com uma frase
+  let h='';
+  (act.items||[]).forEach((it,i)=>{
+    h+='<div class="or-item">';
+    h+='<div class="or-situation"><span class="or-num">'+(i+1)+'.</span>'+esc(it.situation);
+    if(it.cue) h+='<span class="or-cue">'+esc(it.cue)+'</span>';
+    h+='</div>';
+    h+='<input class="or-input" type="text" aria-label="sua resposta" placeholder="">';
+    h+='</div>';
+  });
+  return h;
+}
+
+const RENDERERS={
+  fill_blanks:renderFillBlanks,
+  open_cloze:renderOpenCloze,
+  multiple_choice:renderMultipleChoice,
+  reading_mc:renderReadingMC,
+  match_columns:renderMatchColumns,
+  open_response:renderOpenResponse
+};
+
+// ---- monta a página inteira a partir do objeto ----
+function buildPage(data){
+  const student=getStudentName();
+  const today=getTodayDate();
+  let h='';
+
+  // cabeçalho: nome do aluno (destaque) + data automática no topo, depois título, depois chips de tema
+  h+='<div class="lesson-header">';
+  if(student || today){
+    h+='<div class="student-line">';
+    if(student) h+='<span class="student-name">'+esc(student)+'</span>';
+    if(today) h+='<span class="date">'+esc(today)+'</span>';
+    h+='</div>';
+  }
+  h+='<h2>'+esc(data.lesson||'Activities')+'</h2>';
+  h+='<div class="sub">';
+  if(data.focus) h+='<span class="chip">'+esc(data.focus)+'</span>';
+  if(data.exam) h+='<span class="chip">'+esc(data.exam)+'</span>';
+  h+='</div></div>';
+
+  // atividades (na ordem do JSON; só o que existe)
+  const acts=data.activities||[];
+  acts.forEach((act,i)=>{
+    const fn=RENDERERS[act.type];
+    if(!fn) return; // tipo desconhecido é ignorado, não deixa vazio
+    h+='<div class="activity">';
+    h+='<span class="activity-num">Activity '+(i+1)+'</span>';
+    if(act.title) h+='<h3>'+esc(act.title)+'</h3>';
+    if(act.brief) h+='<p class="brief">'+esc(act.brief)+'</p>';
+    h+=fn(act);
+    h+='</div>';
+  });
+
+  // botão salvar PDF
+  h+='<div class="pdf-bar"><button class="btn-savepdf" onclick="window.print()">Salvar como PDF</button></div>';
+
+  return h;
+}
+
+// ---- interação ----
+function pick(input){
+  const group=input.closest('.mc-q');
+  group.querySelectorAll('.mc-opt').forEach(l=>l.classList.remove('picked'));
+  input.closest('.mc-opt').classList.add('picked');
+}
+
+function renderFromInput(){
+  const raw=document.getElementById('jsonInput').value.trim();
+  const msg=document.getElementById('msg');
+  if(!raw){ msg.className='msg err'; msg.textContent='Cole um JSON primeiro.'; return; }
+  let data;
+  try{ data=JSON.parse(raw); }
+  catch(e){ msg.className='msg err'; msg.textContent='JSON inválido: '+e.message; return; }
+  try{
+    document.getElementById('page').innerHTML=buildPage(data);
+    window.__activityData=data;
+    msg.className='msg ok'; msg.textContent='Montado. Confira na tela, depois clique em "Baixar HTML".';
+  }catch(e){
+    msg.className='msg err'; msg.textContent='Erro ao montar: '+e.message;
+  }
+}
+
+// ---- gera o HTML autossuficiente para baixar ----
+function downloadHTML(){
+  const msg=document.getElementById('msg');
+  const data=window.__activityData;
+  if(!data){ msg.className='msg err'; msg.textContent='Monte a atividade na tela primeiro.'; return; }
+
+  // pega o CSS e o script de build do próprio documento
+  const css=document.querySelector('style').innerHTML;
+  const builder=document.getElementById('builder').innerHTML;
+  const jsonStr=JSON.stringify(data);
+  const fileTitle=(data.lesson||'activities').replace(/[^\w\s-]/g,'').trim();
+
+  const out =
+'<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8">\n'+
+'<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'+
+'<title>'+esc(fileTitle)+'</title>\n'+
+'<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">\n'+
+'<style>'+css+'</style>\n</head>\n<body>\n'+
+'<div class="page" id="page"></div>\n'+
+'<script>'+builder+'<\/script>\n'+
+'<script>\n'+
+'var ACTIVITY_DATA='+jsonStr+';\n'+
+'document.getElementById("page").innerHTML=buildPage(ACTIVITY_DATA);\n'+
+'<\/script>\n</body>\n</html>';
+
+  const blob=new Blob([out],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=fileTitle.replace(/\s+/g,'_')+'.html';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  msg.className='msg ok'; msg.textContent='HTML baixado: '+a.download+'. Suba no GitHub e mande o link com ?aluno=Nome.';
+}
+</script>
+<script>
+var ACTIVITY_DATA={"lesson":"I Wish","focus":"wish / if only","activities":[{"type":"multiple_choice","title":"Present wishes: choose the form","brief":"These are wishes about now. Choose the correct option.","questions":[{"stem":"I wish I ___ more free time during the week.","options":["had","have","would have","had had"]},{"stem":"I wish I ___ taller.","options":["were","am","would be","had been"]},{"stem":"I wish my neighbour ___ stop making noise at night.","options":["would","will","stopped","stops"]},{"stem":"If only I ___ the answer to this!","options":["knew","know","would know","had known"]}]},{"type":"fill_blanks","title":"Present wishes: complete","brief":"Complete each wish about the present. Use the correct form of the verb in brackets.","items":[{"cue":"can","sentence":"I wish I {blank} speak French fluently."},{"cue":"have","sentence":"I wish I {blank} a bigger apartment."},{"cue":"be","sentence":"I wish people {blank} more patient in traffic."},{"cue":"not / be","sentence":"I wish my phone {blank} so slow."},{"cue":"would / listen","sentence":"I wish my colleague {blank} to me more carefully."},{"cue":"not / rain","sentence":"If only it {blank} so much in this city."}]},{"type":"fill_blanks","title":"Past regrets: complete","brief":"Complete each regret about the past. Use the correct form of the verb in brackets.","items":[{"cue":"study","sentence":"I wish I {blank} harder at school."},{"cue":"not / say","sentence":"I wish I {blank} that to her."},{"cue":"buy","sentence":"I wish we {blank} the tickets earlier."},{"cue":"not / waste","sentence":"I wish I {blank} so much time last year."},{"cue":"listen","sentence":"If only I {blank} to your advice."},{"cue":"tell","sentence":"I wish they {blank} me the truth from the start."}]},{"type":"multiple_choice","title":"wish or hope?","brief":"Choose wish (for unreal situations) or hope (for possible future ones).","questions":[{"stem":"___ it doesn't rain at the party tomorrow.","options":["I hope","I wish","If only","I wished"]},{"stem":"I ___ I had gone to the concert last night.","options":["wish","hope","hoped","will wish"]},{"stem":"I ___ you have a great trip next week!","options":["hope","wish","if only","wished"]},{"stem":"She ___ she hadn't quit her job so quickly.","options":["wishes","hopes","hope","wish"]}]}]};
+document.getElementById("page").innerHTML=buildPage(ACTIVITY_DATA);
+</script>
+</body>
+</html>
