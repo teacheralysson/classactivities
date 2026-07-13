@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Habits We Can't Control — Listening Part 3</title>
+<style>
+  :root{
+    --teal:#00A9A0; --dark:#3D4551; --bg:#F5F5F6; --card:#fff;
+    --line:#e4e7ea; --muted:#7a828a; --ok:#2e7d32; --okbg:#e8f5e9;
+    --bad:#c62828; --badbg:#ffebee; --warn:#e65100; --warnbg:#fff3e0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.55;padding:24px;max-width:960px;margin:0 auto;}
+
+  /* header */
+  .header{background:linear-gradient(135deg,var(--teal),var(--dark));color:#fff;padding:26px 30px;border-radius:16px;margin-bottom:22px;}
+  .name-pill{display:inline-block;background:#fff;color:var(--teal);font-weight:700;font-size:15px;padding:6px 18px;border-radius:20px;margin-bottom:12px;}
+  .header h1{font-size:24px;margin-bottom:10px;font-weight:700;}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{background:rgba(255,255,255,.2);padding:5px 12px;border-radius:20px;font-size:12.5px;font-weight:600;}
+  .date{font-size:13px;opacity:.9;margin-top:8px;}
+
+  .card{background:var(--card);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  .card h2{font-size:18px;margin-bottom:6px;color:var(--dark);}
+  .card h2 .num{display:inline-block;background:var(--teal);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;font-size:14px;line-height:26px;margin-right:8px;}
+  .rubric{font-size:14.5px;color:#444;margin-bottom:6px;}
+  .rubric b{color:var(--dark);}
+  .note{font-size:13px;color:var(--warn);background:var(--warnbg);border-left:3px solid var(--warn);padding:8px 12px;border-radius:6px;margin:12px 0;}
+
+  .task{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;}
+  .options{flex:1;min-width:290px;background:#fafbfc;border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+  .options .opt{display:flex;gap:10px;padding:6px 0;font-size:15px;align-items:baseline;}
+  .options .opt b{color:var(--teal);min-width:18px;font-weight:700;}
+  .answers{flex:0 0 260px;min-width:230px;background:#fafbfc;border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+  .arow{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .arow label{font-size:15px;font-weight:600;flex:1;}
+  .arow select{font-family:inherit;font-size:15px;font-weight:700;padding:7px 10px;border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--dark);width:70px;cursor:pointer;}
+  .arow select:focus{outline:none;border-color:var(--teal);}
+  .arow.correct select{border-color:var(--ok);background:var(--okbg);color:var(--ok);}
+  .arow.wrong select{border-color:var(--bad);background:var(--badbg);color:var(--bad);}
+  .arow .mark{font-size:16px;width:18px;}
+
+  .btn{font-family:inherit;font-size:15px;font-weight:600;padding:11px 26px;border:none;border-radius:10px;cursor:pointer;background:var(--teal);color:#fff;transition:box-shadow .15s;}
+  .btn:hover{box-shadow:0 3px 12px rgba(0,169,160,.35);}
+  .btn.ghost{background:#eef0f2;color:var(--dark);}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:18px;flex-wrap:wrap;}
+  .score{font-size:15px;font-weight:700;color:var(--teal);}
+
+  /* analysis */
+  #analysis{display:none;}
+  .sp{border:1px solid var(--line);border-radius:10px;margin-bottom:14px;overflow:hidden;}
+  .sp-head{background:#fafbfc;padding:12px 16px;font-weight:700;font-size:15.5px;cursor:pointer;user-select:none;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);}
+  .sp-head .key{background:var(--ok);color:#fff;font-size:13px;padding:3px 10px;border-radius:14px;font-weight:700;}
+  .sp-head .chev{margin-left:auto;font-size:12px;color:var(--muted);}
+  .sp.closed .sp-body{display:none;}
+  .sp.closed .chev{transform:rotate(-90deg);}
+  .sp-body{padding:14px 16px;}
+  .why{background:var(--okbg);border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14.5px;}
+  .why b{color:var(--ok);}
+  .trap{background:var(--badbg);border-left:4px solid var(--bad);padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:14.5px;}
+  .trap b{color:var(--bad);}
+  .trap .type{display:inline-block;background:#fff;color:var(--bad);border:1px solid #ffcdd2;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:12px;margin-left:6px;text-transform:uppercase;letter-spacing:.3px;}
+  .leftover{background:#f0f0f3;border-left:4px solid var(--muted);padding:12px 14px;border-radius:6px;font-size:14.5px;margin-top:6px;}
+  .traptypes{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px;}
+  .tt{flex:1;min-width:180px;background:#fafbfc;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13.5px;}
+  .tt b{display:block;color:var(--teal);font-size:12.5px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px;}
+
+  /* language section */
+  .lang .item{margin-bottom:14px;}
+  .lang .sent{font-size:15.5px;line-height:2;}
+  .lang input[type=text]{font-family:inherit;font-size:15px;font-weight:600;padding:5px 10px;border:none;border-bottom:2px solid var(--teal);background:#f0faf9;color:var(--dark);width:130px;text-align:center;border-radius:4px 4px 0 0;}
+  .lang input:focus{outline:none;background:#e0f5f3;}
+  .bank{background:#e0f2f1;border-radius:8px;padding:10px 14px;font-size:14px;margin-bottom:16px;}
+  .bank b{color:#00706a;}
+  .lang .item.correct input{border-bottom-color:var(--ok);background:var(--okbg);color:var(--ok);}
+  .lang .item.wrong input{border-bottom-color:var(--bad);background:var(--badbg);color:var(--bad);}
+  @media(max-width:700px){body{padding:12px;} .task{flex-direction:column;} .answers{flex:1;}}
+
+  .pdf-actions{text-align:center;margin:26px 0 10px;}
+  @media print{
+    body{background:#fff;padding:0;}
+    .pdf-actions,.actions{display:none !important;}
+    .card{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid;}
+    #analysis{display:block !important;}
+    .sp.closed .sp-body{display:block !important;}
+    .sp.closed .chev{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="name-pill" id="studentName">Student</div>
+  <h1>Habits We Can't Control</h1>
+  <div class="chips">
+    <span class="chip">Listening · Part 3</span>
+    <span class="chip">Multiple matching</span>
+    <span class="chip">FCE</span>
+  </div>
+  <div class="date" id="today"></div>
+</div>
+
+<!-- TASK -->
+<div class="card">
+  <h2><span class="num">1</span>The task</h2>
+  <div class="rubric">You will hear five short extracts in which people talk about <b>habits they find difficult to control</b>.</div>
+  <div class="rubric">For speakers 1 to 5, choose from the list <b>(A–H)</b> the habit each person has. Use each letter <b>only once</b>. There are <b>three extra letters</b> you do not need to use.</div>
+
+  <div class="task">
+    <div class="options">
+      <div class="opt"><b>A</b><span>eating food that is bad for them</span></div>
+      <div class="opt"><b>B</b><span>exercising far too much</span></div>
+      <div class="opt"><b>C</b><span>buying things they don't need</span></div>
+      <div class="opt"><b>D</b><span>watching too much television</span></div>
+      <div class="opt"><b>E</b><span>spending too many hours online</span></div>
+      <div class="opt"><b>F</b><span>sleeping far too long</span></div>
+      <div class="opt"><b>G</b><span>working too hard</span></div>
+      <div class="opt"><b>H</b><span>being late for everything</span></div>
+    </div>
+
+    <div class="answers" id="answersBox">
+      <div class="arow" data-q="1"><label>Speaker 1</label><select id="q1"><option value="">–</option></select><span class="mark"></span></div>
+      <div class="arow" data-q="2"><label>Speaker 2</label><select id="q2"><option value="">–</option></select><span class="mark"></span></div>
+      <div class="arow" data-q="3"><label>Speaker 3</label><select id="q3"><option value="">–</option></select><span class="mark"></span></div>
+      <div class="arow" data-q="4"><label>Speaker 4</label><select id="q4"><option value="">–</option></select><span class="mark"></span></div>
+      <div class="arow" data-q="5"><label>Speaker 5</label><select id="q5"><option value="">–</option></select><span class="mark"></span></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="checkBtn">Check answers</button>
+    <button class="btn ghost" id="resetBtn">Try again</button>
+    <span class="score" id="score"></span>
+  </div>
+</div>
+
+<!-- ANALYSIS -->
+<div class="card" id="analysis">
+  <h2>Why the wrong answers were tempting</h2>
+  <div class="rubric">In Part 3, the wrong options are designed to <b>almost</b> fit. Learn to spot the three traps, and the task becomes far easier.</div>
+
+  <div class="traptypes">
+    <div class="tt"><b>Word match</b>The speaker says the word, but it isn't their habit.</div>
+    <div class="tt"><b>Almost fits</b>A detail that is true, but not the real habit.</div>
+    <div class="tt"><b>Fact vs feeling</b>What they do, versus how they feel about it.</div>
+  </div>
+
+  <div class="sp closed" id="sp1">
+    <div class="sp-head"><span>Speaker 1</span><span class="key">C · buying things they don't need</span><span class="chev">▼</span></div>
+    <div class="sp-body">
+      <div class="why"><b>The clue:</b> he fills his basket and admits that whether he actually needs any of it <b>is irrelevant</b>. That single word settles it: the habit is the buying, not what he buys.</div>
+      <div class="trap"><b>Trap A (food):</b> he mentions a ready meal and junk food, so "eating badly" feels right. But the food <b>ends up in the bin</b>: he buys it, he doesn't eat it. <span class="type">Word match</span></div>
+      <div class="trap"><b>Trap E (online):</b> he is online the whole time. But being online is the <b>means</b>, not the habit. Ask yourself what he cannot stop <b>doing</b>. <span class="type">Almost fits</span></div>
+    </div>
+  </div>
+
+  <div class="sp closed" id="sp2">
+    <div class="sp-head"><span>Speaker 2</span><span class="key">E · spending too many hours online</span><span class="chev">▼</span></div>
+    <div class="sp-body">
+      <div class="why"><b>The clue:</b> he never manages to <b>log off</b> until two in the morning. The habit is the hours online, whatever he is looking at.</div>
+      <div class="trap"><b>Trap C (buying):</b> he visits shopping sites, but says he <b>rarely buys</b> anything. The word "shopping" is there; the habit is not. <span class="type">Word match</span></div>
+      <div class="trap"><b>Trap F (sleeping too long):</b> he keeps falling asleep during the day, which sounds like oversleeping. But he sleeps <b>too little</b>: up at seven after going to bed at two. <span class="type">Almost fits</span></div>
+      <div class="trap"><b>Trap A (food):</b> he mentions overeating only to say his own habit is <b>less harmful</b> than that. He is comparing, not confessing. <span class="type">Fact vs feeling</span></div>
+    </div>
+  </div>
+
+  <div class="sp closed" id="sp3">
+    <div class="sp-head"><span>Speaker 3</span><span class="key">B · exercising far too much</span><span class="chev">▼</span></div>
+    <div class="sp-body">
+      <div class="why"><b>The clue:</b> he doesn't feel right unless he is <b>working on his fitness</b>, and the long-term effects are starting to worry him. Note the attitude: concern, not denial.</div>
+      <div class="trap"><b>Trap A (food):</b> he talks about bigger meals and expensive food, but he <b>always chooses food that is good for him</b>. The food is a consequence of the exercise. <span class="type">Almost fits</span></div>
+      <div class="trap"><b>Trap G (working too hard):</b> "I always feel I have to be doing something" sounds like a workaholic. But what he must be doing is <b>exercise</b>, not work. <span class="type">Word match</span></div>
+    </div>
+  </div>
+
+  <div class="sp closed" id="sp4">
+    <div class="sp-head"><span>Speaker 4</span><span class="key">D · watching too much television</span><span class="chev">▼</span></div>
+    <div class="sp-body">
+      <div class="why"><b>The clue:</b> the TV was on all the time at his parents' home and it is the same in his flat, and he is <b>hooked on</b> the same series. "Hooked on" is the giveaway.</div>
+      <div class="trap"><b>Trap E (online):</b> he mentions the internet, but to say that is what <b>other people</b> of his generation do, not him. Watch for "most people..." <span class="type">Fact vs feeling</span></div>
+      <div class="trap"><b>Trap F (sleeping too long):</b> he did struggle to get up before noon, but that was <b>back in his student days</b>. Now he gets up reasonably early. Past, not present. <span class="type">Almost fits</span></div>
+    </div>
+  </div>
+
+  <div class="sp closed" id="sp5">
+    <div class="sp-head"><span>Speaker 5</span><span class="key">H · being late for everything</span><span class="chev">▼</span></div>
+    <div class="sp-body">
+      <div class="why"><b>The clue:</b> he is <b>always the last to turn up</b>, and something always <b>holds him up</b>. He even ends up running to get there.</div>
+      <div class="trap"><b>Trap G (working too hard):</b> the strongest trap in the whole task. He mentions a job to finish and an email to answer, so "working too hard" feels obvious. But those are the <b>causes</b> of the lateness, not the habit itself. <span class="type">Almost fits</span></div>
+      <div class="trap"><b>Trap D (television):</b> he mentions a TV programme that hasn't ended, another cause, not the habit. <span class="type">Word match</span></div>
+      <div class="trap"><b>Trap F (sleeping too long):</b> he actually <b>tries to get up earlier</b>. He is not oversleeping; the lack of sleep is a side effect. <span class="type">Fact vs feeling</span></div>
+    </div>
+  </div>
+
+  <div class="leftover">
+    <b>The three letters left over: A, F and G.</b> That is not an accident. Food, oversleeping and overwork are exactly the three ideas the speakers scatter through their answers as bait. In Part 3, the extra options are usually the <b>most tempting surface details</b>, not random ideas. If an option feels obvious after one sentence, be suspicious.
+  </div>
+</div>
+
+<!-- LANGUAGE -->
+<div class="card lang" id="langCard">
+  <h2><span class="num">2</span>The language of habit and tendency</h2>
+  <div class="rubric">This is how the speakers described habits that slip out of their control. Complete each sentence.</div>
+  <div class="bank"><b>Use:</b> keep · end up · can't help · tend to · somehow · rarely</div>
+
+  <div class="item" data-a="keep">
+    <div class="sent">I <input type="text" data-i="1"> checking my phone, even in the middle of a conversation.</div>
+  </div>
+  <div class="item" data-a="end up">
+    <div class="sent">I only meant to look, but I always <input type="text" data-i="2"> buying something I don't need.</div>
+  </div>
+  <div class="item" data-a="can't help">
+    <div class="sent">I <input type="text" data-i="3"> feeling that I should be doing something more useful.</div>
+  </div>
+  <div class="item" data-a="tend to">
+    <div class="sent">I <input type="text" data-i="4"> leave everything until the last minute.</div>
+  </div>
+  <div class="item" data-a="somehow">
+    <div class="sent">I set off early, but <input type="text" data-i="5"> I'm still the last to arrive.</div>
+  </div>
+  <div class="item" data-a="rarely">
+    <div class="sent">I spend hours on those sites, but I <input type="text" data-i="6"> buy anything.</div>
+  </div>
+</div>
+
+
+<div class="pdf-actions">
+  <button class="btn" onclick="window.print()">📄 Salvar como PDF</button>
+</div>
+
+<script>
+// student name + date
+const params=new URLSearchParams(window.location.search);
+const aluno=params.get("aluno");
+if(aluno) document.getElementById("studentName").textContent=decodeURIComponent(aluno);
+const d=new Date();
+document.getElementById("today").textContent=d.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+
+// populate dropdowns A-H
+const LETTERS=["A","B","C","D","E","F","G","H"];
+for(let q=1;q<=5;q++){
+  const sel=document.getElementById("q"+q);
+  LETTERS.forEach(L=>{ const o=document.createElement("option"); o.value=L; o.textContent=L; sel.appendChild(o); });
+}
+
+const KEY={1:"C",2:"E",3:"B",4:"D",5:"H"};
+
+document.getElementById("checkBtn").addEventListener("click",()=>{
+  let score=0, answered=0;
+  for(let q=1;q<=5;q++){
+    const sel=document.getElementById("q"+q);
+    const row=document.querySelector('.arow[data-q="'+q+'"]');
+    const mark=row.querySelector(".mark");
+    row.classList.remove("correct","wrong");
+    if(!sel.value){ mark.textContent=""; continue; }
+    answered++;
+    if(sel.value===KEY[q]){ row.classList.add("correct"); mark.textContent="✓"; score++; }
+    else { row.classList.add("wrong"); mark.textContent="✕"; }
+  }
+  if(answered===0){ document.getElementById("score").textContent="Choose a letter for each speaker first."; return; }
+  document.getElementById("score").textContent=score+" / 5";
+  const an=document.getElementById("analysis");
+  an.style.display="block";
+  an.scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  for(let q=1;q<=5;q++){
+    document.getElementById("q"+q).value="";
+    const row=document.querySelector('.arow[data-q="'+q+'"]');
+    row.classList.remove("correct","wrong");
+    row.querySelector(".mark").textContent="";
+  }
+  document.getElementById("score").textContent="";
+  document.getElementById("analysis").style.display="none";
+});
+
+// analysis accordions
+document.querySelectorAll(".sp-head").forEach(h=>{
+  h.addEventListener("click",()=>h.parentElement.classList.toggle("closed"));
+});
+</script>
+</body>
+</html>
