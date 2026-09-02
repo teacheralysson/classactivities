@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Skincare">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+CiAgPHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSI0MCIgZmlsbD0iIzBmMGYwZiIvPgogIDxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9InVybCgjZ3JhZCkiLz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEyZTIyIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMGYwZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPCEtLSBMZWFmL3NraW4gc3ltYm9sIC0tPgogIDxlbGxpcHNlIGN4PSI5MCIgY3k9IjcyIiByeD0iMjgiIHJ5PSIzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2M5ZThhIiBzdHJva2Utd2lkdGg9IjMuNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTE1IDkwIDcyKSIvPgogIDxlbGxpcHNlIGN4PSI5MCIgY3k9IjcyIiByeD0iMjgiIHJ5PSIzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2M5ZThhIiBzdHJva2Utd2lkdGg9IjMuNSIgdHJhbnNmb3JtPSJyb3RhdGUoMTUgOTAgNzIpIi8+CiAgPGxpbmUgeDE9IjkwIiB5MT0iMzgiIHgyPSI5MCIgeTI9IjEwNiIgc3Ryb2tlPSIjN2M5ZThhIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSBUZXh0IC0tPgogIDx0ZXh0IHg9IjkwIiB5PSIxMzgiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM3YzllOGEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5TS0lOQ0FSRTwvdGV4dD4KPC9zdmc+">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+CiAgPHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSI0MCIgZmlsbD0iIzBmMGYwZiIvPgogIDxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9InVybCgjZ3JhZCkiLz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEyZTIyIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMGYwZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPCEtLSBMZWFmL3NraW4gc3ltYm9sIC0tPgogIDxlbGxpcHNlIGN4PSI5MCIgY3k9IjcyIiByeD0iMjgiIHJ5PSIzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2M5ZThhIiBzdHJva2Utd2lkdGg9IjMuNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTE1IDkwIDcyKSIvPgogIDxlbGxpcHNlIGN4PSI5MCIgY3k9IjcyIiByeD0iMjgiIHJ5PSIzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2M5ZThhIiBzdHJva2Utd2lkdGg9IjMuNSIgdHJhbnNmb3JtPSJyb3RhdGUoMTUgOTAgNzIpIi8+CiAgPGxpbmUgeDE9IjkwIiB5MT0iMzgiIHgyPSI5MCIgeTI9IjEwNiIgc3Ryb2tlPSIjN2M5ZThhIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSBUZXh0IC0tPgogIDx0ZXh0IHg9IjkwIiB5PSIxMzgiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM3YzllOGEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5TS0lOQ0FSRTwvdGV4dD4KPC9zdmc+">
+<title>Skincare · Álysson</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #242424;
+    --border: #2e2e2e;
+    --text: #e8e8e8;
+    --muted: #888;
+    --accent: #7c9e8a;
+    --accent2: #5a7a68;
+    --warn: #c4773a;
+    --danger: #a84040;
+    --ok: #4a8c6a;
+    --radius: 12px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    padding: 0 4px;
+  }
+  nav button {
+    flex: 1; background: none; border: none;
+    color: var(--muted); font-size: 11px;
+    padding: 14px 4px 12px;
+    cursor: pointer; letter-spacing: .03em;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* PAGES */
+  .page { display: none; padding: 20px 16px 40px; }
+  .page.active { display: block; }
+
+  /* HEADINGS */
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  h2 { font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase;
+       letter-spacing: .08em; margin: 24px 0 12px; }
+  h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .card-row {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 12px;
+  }
+  .tag {
+    font-size: 10px; font-weight: 600; letter-spacing: .06em;
+    padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .tag-am { background: #2a3f30; color: #7fc49a; }
+  .tag-pm { background: #1e2a40; color: #7aacd4; }
+  .tag-both { background: #2f2a1e; color: #d4b87a; }
+  .tag-micro { background: #3a1e2a; color: #d47aa8; }
+
+  /* ROTINA STEPS */
+  .step {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--accent);
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .step-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* CALENDAR */
+  .month-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .month-header button {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); width: 36px; height: 36px; border-radius: 8px;
+    font-size: 18px; cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+  }
+  .month-title { font-size: 17px; font-weight: 700; }
+  .cal-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 4px; margin-bottom: 16px;
+  }
+  .cal-day-name {
+    text-align: center; font-size: 10px; font-weight: 600;
+    color: var(--muted); padding: 6px 0; letter-spacing: .05em;
+  }
+  .cal-day {
+    aspect-ratio: 1; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    border: 1px solid transparent; transition: all .15s;
+    position: relative;
+  }
+  .cal-day:hover { border-color: var(--accent); }
+  .cal-day.empty { cursor: default; }
+  .cal-day.today { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  .cal-day.micro { background: #3a1e2a; color: #d47aa8; border-color: #6b3050; font-weight: 700; }
+  .cal-day.pre-pause { background: #2a1e1e; color: var(--warn); }
+  .cal-day.post-pause { background: #1e2a22; color: #7fc49a; }
+  .cal-day.selected { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* DAY DETAIL */
+  .day-detail {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 4px;
+  }
+  .day-detail-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .protocol-block { margin-bottom: 14px; }
+  .protocol-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .protocol-item {
+    font-size: 13px; padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .protocol-item:last-child { border-bottom: none; }
+  .protocol-item::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+
+  /* STATUS BADGES */
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; padding: 6px 12px;
+    border-radius: 20px; margin-bottom: 14px;
+  }
+  .badge-normal { background: #1e2f24; color: #7fc49a; }
+  .badge-pre { background: #2f1e1e; color: var(--warn); }
+  .badge-post { background: #1e2a22; color: #7fc49a; }
+  .badge-micro { background: #3a1e2a; color: #d47aa8; }
+
+  /* CARTUCHO BUTTONS */
+  .cart-btn {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--muted); font-size: 13px; font-weight: 600;
+    padding: 8px 16px; border-radius: 20px; cursor: pointer;
+    transition: all .2s;
+  }
+  .cart-btn.active {
+    background: var(--accent2); border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* LEGEND */
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <button class="active" onclick="showPage('produtos')">Produtos</button>
+  <button onclick="showPage('rotina')">Rotina</button>
+  <button onclick="showPage('calendario')">Calendário</button>
+</nav>
+
+<!-- PRODUTOS -->
+<div id="page-produtos" class="page active">
+  <h1>Produtos</h1>
+  <p style="margin-bottom:8px">O que você usa e para que serve.</p>
+
+  <h2>Tratamento Base</h2>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>Sérum Manipulado</h3>
+        <p>GHK-Cu 5% + PDRN 0,5% + VC-IP 2% + Talasferas 5%. Seu produto central — colágeno, reparação de cicatrizes, antioxidante e PDRN numa camada só. Manhã e noite.</p>
+      </div>
+      <span class="tag tag-both">Manhã · Noite</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>Vitacid (Tretinoína)</h3>
+        <p>O ativo mais potente da rotina. Remodelamento de cicatrizes atróficas em profundidade, síntese de colágeno, textura e linhas de expressão. Noites alternadas evoluindo para uso diário.</p>
+      </div>
+      <span class="tag tag-pm">Noite</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>AM-10 Ácido Mandélico 10% + Alfa-Arbutin 1%</h3>
+        <p>Renovação suave sem vermelhidão. Clareia manchas via alfa-arbutin. Controla oleosidade. Noites sem Vitacid.</p>
+      </div>
+      <span class="tag tag-pm">Noite</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>Azelan 15% (Ácido Azelaico)</h3>
+        <p>Trata dermatite seborreica, reduz vermelhidão recorrente e inibe formação de manchas. Rosto todo e pescoço todas as manhãs.</p>
+      </div>
+      <span class="tag tag-am">Manhã</span>
+    </div>
+  </div>
+
+  <h2>Proteção e Finalização</h2>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>Protetor Solar Anasol</h3>
+        <p>Proteção obrigatória em Maceió. Sem SPF, a Vitacid e os ácidos noturnos são sabotados pelo fotodano diurno. Toque seco e antioleosidade.</p>
+      </div>
+      <span class="tag tag-am">Manhã</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>Hidratante Calmante</h3>
+        <p>Bepantol Derma ou similar. Repara barreira após Vitacid e ácidos. Fecha todas as noites.</p>
+      </div>
+      <span class="tag tag-pm">Noite</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>GL-01 Gel de Limpeza Principia</h3>
+        <p>Limpeza de base. Abre todas as rotinas manhã e noite sem agredir a barreira.</p>
+      </div>
+      <span class="tag tag-both">Manhã · Noite</span>
+    </div>
+  </div>
+
+  <h2>Microagulhamento Mensal</h2>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>Maelove</h3>
+        <p>GHK-Cu encapsulado + Argireline + Matrixyl 3000. Deslizante durante a sessão. Cicatrizes, linhas de expressão e síntese de colágeno pelos microcanais.</p>
+      </div>
+      <span class="tag tag-micro">Micro</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>Sérum Manipulado (pós-canais)</h3>
+        <p>Aplicado imediatamente após o Maelove em cada região. GHK-Cu + PDRN entram pelos microcanais abertos para reparação e colágeno profundos.</p>
+      </div>
+      <span class="tag tag-micro">Micro</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-row">
+      <div>
+        <h3>NeuroPlasma Lakma</h3>
+        <p>Fatores de crescimento BFGF e IGF. Deslizante alternativo no microagulhamento. Também pode ser usado nas noites sem Vitacid até acabar o frasco.</p>
+      </div>
+      <span class="tag tag-micro">Micro</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTINA -->
+<div id="page-rotina" class="page">
+  <h1>Rotina</h1>
+  <p style="margin-bottom: 8px">Consulta rápida dia a dia.</p>
+
+  <h2>Manhã — todos os dias</h2>
+  <div class="card">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div><div class="step-name">GL-01</div><div class="step-desc">Limpeza. Seca bem antes de continuar.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div><div class="step-name">Sérum Manipulado</div><div class="step-desc">GHK-Cu + PDRN + vitamina C. Deixa absorver 2 min.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><div class="step-name">Azelan 15%</div><div class="step-desc">Rosto todo e pescoço. Absorve rápido.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div><div class="step-name">Protetor Anasol</div><div class="step-desc">Obrigatório. Reaplicar ao meio-dia se sair.</div></div>
+    </div>
+  </div>
+
+  <h2>Noite com Vitacid</h2>
+  <div class="card">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div><div class="step-name">GL-01</div><div class="step-desc">Limpeza. Seca completamente.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div><div class="step-name">Sérum Manipulado</div><div class="step-desc">GHK-Cu + PDRN. Deixa absorver 2 min antes do Vitacid.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><div class="step-name">Vitacid</div><div class="step-desc">Quantidade de uma ervilha. Rosto todo.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div><div class="step-name">Hidratante Calmante</div><div class="step-desc">Bepantol Derma ou similar. Fecha a noite.</div></div>
+    </div>
+  </div>
+
+  <h2>Noite sem Vitacid</h2>
+  <div class="card">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div><div class="step-name">GL-01</div><div class="step-desc">Limpeza. Seca completamente.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div><div class="step-name">AM-10</div><div class="step-desc">Ácido mandélico + alfa-arbutin. Renovação e clareamento.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><div class="step-name">Sérum Manipulado</div><div class="step-desc">GHK-Cu + PDRN. Reparação e colágeno.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div><div class="step-name">Hidratante Calmante</div><div class="step-desc">Fecha a noite.</div></div>
+    </div>
+  </div>
+
+  <h2>Dia do Microagulhamento</h2>
+  <div class="card">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div><div class="step-name">GL-01</div><div class="step-desc">Limpeza. Seca completamente antes de agulhar.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div><div class="step-name">Maelove como deslizante</div><div class="step-desc">Aplica na região → agulha → aplica Sérum Manipulado → avança para próxima região.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><div class="step-name">Sérum Manipulado pós-canais</div><div class="step-desc">Imediatamente após cada região. GHK-Cu + PDRN pelos microcanais abertos.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div><div class="step-name">Espera 5 min</div><div class="step-desc">Deixa absorver antes de fechar.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div><div class="step-name">Cicaplast B5 ou Bepantol</div><div class="step-desc">Camada generosa. Não aplica mais nada esta noite.</div></div>
+    </div>
+  </div>
+
+  <h2>Escolha do Cartucho</h2>
+  <div class="card">
+    <div class="step">
+      <div class="step-num" style="font-size:9px;background:#2a3f30;border-color:#4a7a5a;color:#7fc49a">NANO</div>
+      <div>
+        <div class="step-name">Nano — 1 cartucho</div>
+        <div class="step-desc">Profundidade máxima 0,3mm. Estimulação superficial sem perfurar a barreira. Recuperação em 24h. Ideal antes de viagens ou eventos onde não pode ter vermelhidão. Também para área dos olhos e pés de galinha em qualquer sessão.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="font-size:9px;background:#1e2a40;border-color:#4a6a8a;color:#7aacd4">16P</div>
+      <div>
+        <div class="step-name">16 pinos — 3 cartuchos</div>
+        <div class="step-desc">Cartucho principal para sessões mensais com drug delivery. Cria canais limpos e controlados que maximizam a absorção do Maelove e do sérum manipulado. Melhor custo-benefício para cicatrizes e procedimento completo.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="font-size:9px;background:#2f2a1e;border-color:#7a6a3a;color:#d4b87a">36P</div>
+      <div>
+        <div class="step-name">36 pinos — 6 cartuchos</div>
+        <div class="step-desc">Mais pontos de contato por cm². Indicado para áreas grandes como testa, pescoço e bochechas quando o objetivo é renovação de textura geral — não drug delivery intenso nas cicatrizes. Mais trauma mecânico, recuperação um pouco mais longa.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="font-size:9px;background:#3a1e2a;border-color:#6b3050;color:#d47aa8">42P</div>
+      <div>
+        <div class="step-name">42 pinos — 2 cartuchos</div>
+        <div class="step-desc">Máxima densidade de pontos. Melhor para renovação superficial ampla em pele espessa como pescoço e mandíbula. Não usar nas cicatrizes profundas — a densidade reduz a profundidade efetiva de cada canal individualmente. Reservar para sessões de manutenção de textura geral.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Profundidades por Região</h2>
+  <p style="margin-bottom:12px;font-size:13px">Selecione o cartucho que vai usar:</p>
+
+  <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+    <button class="cart-btn active" onclick="selectCart('nano', this)">Nano</button>
+    <button class="cart-btn" onclick="selectCart('16p', this)">16 pinos</button>
+    <button class="cart-btn" onclick="selectCart('36p', this)">36 pinos</button>
+    <button class="cart-btn" onclick="selectCart('42p', this)">42 pinos</button>
+  </div>
+
+  <div id="prof-detail" class="card"></div>
+</div>
+
+<!-- CALENDÁRIO -->
+<div id="page-calendario" class="page">
+  <h1>Calendário</h1>
+  <p style="margin-bottom:16px">Clique em qualquer dia para ver o protocolo.</p>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3a1e2a;border:1px solid #6b3050"></div>Microagulhamento</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2a1e1e"></div>Pausa pré (7 dias)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1e2a22"></div>Recuperação (7 dias)</div>
+  </div>
+
+  <div class="month-header">
+    <button onclick="changeMonth(-1)">‹</button>
+    <div class="month-title" id="month-title"></div>
+    <button onclick="changeMonth(1)">›</button>
+  </div>
+
+  <div class="cal-grid">
+    <div class="cal-day-name">Dom</div>
+    <div class="cal-day-name">Seg</div>
+    <div class="cal-day-name">Ter</div>
+    <div class="cal-day-name">Qua</div>
+    <div class="cal-day-name">Qui</div>
+    <div class="cal-day-name">Sex</div>
+    <div class="cal-day-name">Sáb</div>
+    <div id="cal-days"></div>
+  </div>
+
+  <div id="day-detail" class="day-detail" style="display:none"></div>
+</div>
+
+<script>
+const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+let currentYear, currentMonth, selectedDate;
+
+function init() {
+  const now = new Date();
+  currentYear = now.getFullYear();
+  currentMonth = now.getMonth();
+  renderCalendar();
+  // Auto-select today
+  selectDay(now.getDate(), currentYear, currentMonth);
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function getLastFriday(year, month) {
+  // Last friday of month
+  const lastDay = new Date(year, month + 1, 0);
+  const dow = lastDay.getDay(); // 0=Sun,5=Fri
+  const diff = (dow >= 5) ? dow - 5 : dow + 2;
+  return new Date(year, month, lastDay.getDate() - diff);
+}
+
+function getDayType(date) {
+  // Check current month and adjacent months for micro dates
+  for (let m = -1; m <= 1; m++) {
+    let y = date.getFullYear();
+    let mo = date.getMonth() + m;
+    if (mo < 0) { mo = 11; y--; }
+    if (mo > 11) { mo = 0; y++; }
+    const micro = getLastFriday(y, mo);
+    const diff = Math.round((date - micro) / 86400000);
+    if (diff === 0) return 'micro';
+    if (diff > -8 && diff < 0) return 'pre-pause';
+    if (diff > 0 && diff < 8) return 'post-pause';
+  }
+  return 'normal';
+}
+
+function changeMonth(dir) {
+  currentMonth += dir;
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  renderCalendar();
+  document.getElementById('day-detail').style.display = 'none';
+}
+
+function renderCalendar() {
+  document.getElementById('month-title').textContent = MONTHS_PT[currentMonth] + ' ' + currentYear;
+  const container = document.getElementById('cal-days');
+  container.style.display = 'contents';
+
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const today = new Date();
+
+  let html = '';
+  for (let i = 0; i < firstDay; i++) {
+    html += `<div class="cal-day empty"></div>`;
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(currentYear, currentMonth, d);
+    const type = getDayType(date);
+    const isToday = (d === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear());
+    const isSelected = selectedDate && (d === selectedDate.d && currentMonth === selectedDate.m && currentYear === selectedDate.y);
+    let classes = `cal-day ${type}`;
+    if (isToday) classes += ' today';
+    if (isSelected) classes += ' selected';
+    html += `<div class="${classes}" onclick="selectDay(${d}, ${currentYear}, ${currentMonth})">${d}</div>`;
+  }
+  container.innerHTML = html;
+}
+
+function selectDay(d, y, m) {
+  selectedDate = { d, y, m };
+  renderCalendar();
+
+  const date = new Date(y, m, d);
+  const type = getDayType(date);
+  const micro = getLastFriday(y, m);
+  const diffFromMicro = Math.round((date - micro) / 86400000);
+
+  // Figure out which month's micro we're relative to
+  let refMicro = micro;
+  if (diffFromMicro < -7) {
+    // relative to next month
+    let nm = m + 1, ny = y;
+    if (nm > 11) { nm = 0; ny++; }
+    refMicro = getLastFriday(ny, nm);
+  }
+  const diff = Math.round((date - refMicro) / 86400000);
+
+  const detail = document.getElementById('day-detail');
+  detail.style.display = 'block';
+
+  const dayNames = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+  const dayName = dayNames[date.getDay()];
+  const dateStr = `${dayName}, ${d} de ${MONTHS_PT[m]}`;
+
+  let badge = '';
+  let manha = '';
+  let noite = '';
+  let obs = '';
+
+  if (type === 'micro') {
+    badge = `<div class="status-badge badge-micro">💉 Dia do Microagulhamento</div>`;
+    manha = `<div class="protocol-item">GL-01 — limpeza</div>
+              <div class="protocol-item">Sérum Manipulado — manhã normal</div>
+              <div class="protocol-item">Azelan 15% — rosto e pescoço</div>
+              <div class="protocol-item">Protetor Anasol</div>`;
+    noite = `<div class="protocol-item">GL-01 — limpeza, seca completamente</div>
+             <div class="protocol-item">Maelove — deslizante durante a agulhagem</div>
+             <div class="protocol-item">Sérum Manipulado — imediatamente pós-canais por região</div>
+             <div class="protocol-item">Espera 5 min</div>
+             <div class="protocol-item">Cicaplast B5 ou Bepantol — fecha, nada mais esta noite</div>`;
+    obs = `<div style="margin-top:12px;padding:10px;background:#3a1e2a;border-radius:8px;font-size:12px;color:#d47aa8">
+             Cartucho 16 pinos. Sem Vitacid esta noite. Sem exercício intenso amanhã.
+           </div>`;
+  } else if (type === 'pre-pause') {
+    const daysLeft = Math.abs(diff);
+    badge = `<div class="status-badge badge-pre">⏸ Pausa pré-micro — ${daysLeft} dia${daysLeft>1?'s':''} para a sessão</div>`;
+    manha = `<div class="protocol-item">GL-01 — limpeza</div>
+              <div class="protocol-item">Sérum Manipulado</div>
+              <div class="protocol-item">Azelan 15%</div>
+              <div class="protocol-item">Protetor Anasol</div>`;
+    noite = `<div class="protocol-item">GL-01 — limpeza</div>
+             <div class="protocol-item">Sérum Manipulado</div>
+             <div class="protocol-item">Hidratante Calmante</div>`;
+    obs = `<div style="margin-top:12px;padding:10px;background:#2f1e1e;border-radius:8px;font-size:12px;color:${getComputedStyle(document.documentElement).getPropertyValue('--warn')}">
+             Vitacid e ácidos pausados. Mantém só sérum manipulado, azelaico e hidratante.
+           </div>`;
+  } else if (type === 'post-pause') {
+    const dayAfter = diff;
+    badge = `<div class="status-badge badge-post">🌿 Recuperação — dia ${dayAfter} pós-micro</div>`;
+
+    if (dayAfter <= 2) {
+      manha = `<div class="protocol-item">GL-01 — limpeza suave</div>
+                <div class="protocol-item">Sérum Manipulado — GHK-Cu + PDRN</div>
+                <div class="protocol-item">Protetor Anasol</div>`;
+      noite = `<div class="protocol-item">GL-01 — limpeza suave</div>
+               <div class="protocol-item">Sérum Manipulado</div>
+               <div class="protocol-item">Hidratante Calmante</div>`;
+      obs = `<div style="margin-top:12px;padding:10px;background:#1e2a22;border-radius:8px;font-size:12px;color:#7fc49a">
+               Sem ácidos nem Vitacid ainda. Apenas GHK-Cu e hidratante.
+             </div>`;
+    } else if (dayAfter <= 3) {
+      manha = `<div class="protocol-item">GL-01</div>
+                <div class="protocol-item">Sérum Manipulado</div>
+                <div class="protocol-item">Vitamina C volta hoje</div>
+                <div class="protocol-item">Protetor Anasol</div>`;
+      noite = `<div class="protocol-item">GL-01</div>
+               <div class="protocol-item">Sérum Manipulado</div>
+               <div class="protocol-item">Hidratante Calmante</div>`;
+    } else if (dayAfter <= 5) {
+      manha = `<div class="protocol-item">GL-01</div>
+                <div class="protocol-item">Sérum Manipulado</div>
+                <div class="protocol-item">Azelan 15% — volta hoje</div>
+                <div class="protocol-item">Protetor Anasol</div>`;
+      noite = `<div class="protocol-item">GL-01</div>
+               <div class="protocol-item">Sérum Manipulado</div>
+               <div class="protocol-item">Hidratante Calmante</div>`;
+    } else if (dayAfter <= 6) {
+      manha = `<div class="protocol-item">GL-01</div>
+                <div class="protocol-item">Sérum Manipulado</div>
+                <div class="protocol-item">Azelan 15%</div>
+                <div class="protocol-item">Protetor Anasol</div>`;
+      noite = `<div class="protocol-item">GL-01</div>
+               <div class="protocol-item">AM-10 — volta hoje</div>
+               <div class="protocol-item">Sérum Manipulado</div>
+               <div class="protocol-item">Hidratante Calmante</div>`;
+    } else {
+      manha = `<div class="protocol-item">GL-01</div>
+                <div class="protocol-item">Sérum Manipulado</div>
+                <div class="protocol-item">Azelan 15%</div>
+                <div class="protocol-item">Protetor Anasol</div>`;
+      noite = `<div class="protocol-item">GL-01</div>
+               <div class="protocol-item">AM-10</div>
+               <div class="protocol-item">Sérum Manipulado</div>
+               <div class="protocol-item">Vitacid — volta hoje</div>
+               <div class="protocol-item">Hidratante Calmante</div>`;
+      obs = `<div style="margin-top:12px;padding:10px;background:#1e2a22;border-radius:8px;font-size:12px;color:#7fc49a">
+               Rotina completa retomada. Vitacid volta esta noite.
+             </div>`;
+    }
+  } else {
+    // Normal day - alternate vitacid
+    badge = `<div class="status-badge badge-normal">✓ Dia Normal</div>`;
+    // Alternate vitacid based on day of year
+    const dayOfYear = Math.floor((date - new Date(y, 0, 0)) / 86400000);
+    const vitacidNight = dayOfYear % 2 === 0;
+
+    manha = `<div class="protocol-item">GL-01 — limpeza</div>
+              <div class="protocol-item">Sérum Manipulado</div>
+              <div class="protocol-item">Azelan 15% — rosto e pescoço</div>
+              <div class="protocol-item">Protetor Anasol</div>`;
+
+    if (vitacidNight) {
+      noite = `<div class="protocol-item">GL-01 — limpeza</div>
+               <div class="protocol-item">Sérum Manipulado</div>
+               <div class="protocol-item">Vitacid — ervilha, rosto todo</div>
+               <div class="protocol-item">Hidratante Calmante</div>`;
+    } else {
+      noite = `<div class="protocol-item">GL-01 — limpeza</div>
+               <div class="protocol-item">AM-10 — renovação e clareamento</div>
+               <div class="protocol-item">Sérum Manipulado</div>
+               <div class="protocol-item">Hidratante Calmante</div>`;
+    }
+  }
+
+  detail.innerHTML = `
+    <div class="day-detail-title">${dateStr}</div>
+    ${badge}
+    <div class="protocol-block">
+      <div class="protocol-label">☀️ Manhã</div>
+      ${manha}
+    </div>
+    <div class="protocol-block">
+      <div class="protocol-label">🌙 Noite</div>
+      ${noite}
+    </div>
+    ${obs}
+  `;
+}
+
+const CART_DATA = {
+  nano: {
+    label: 'Nano',
+    obs: 'Estimulação superficial. Recuperação em 24h. Ideal pré-viagem ou para olhos/pés de galinha.',
+    regioes: [
+      { area: 'ROSTO TODO', prof: '0,3mm', vel: 'Vel 1–2', desc: 'Deslizar suave. Cobertura completa sem trauma real.' },
+      { area: 'OLHOS', prof: '0,25mm', vel: 'Vel 1', desc: 'Passes levíssimos. Ideal para pés de galinha.' },
+      { area: 'PESCOÇO', prof: '0,3mm', vel: 'Vel 1–2', desc: 'Deslizar de cima para baixo.' },
+    ]
+  },
+  '16p': {
+    label: '16 pinos',
+    obs: 'Cartucho principal para drug delivery. Canais limpos e controlados — máxima absorção do Maelove e sérum manipulado.',
+    regioes: [
+      { area: 'TESTA', prof: '1,0–1,5mm', vel: 'Vel 3', desc: 'Deslizar. Divide esquerda e direita.' },
+      { area: 'OLHOS', prof: '0,3–0,5mm', vel: 'Vel 1', desc: 'Passes muito leves. Pele fina.' },
+      { area: 'BOCHECHAS — cicatrizes', prof: '1,5mm', vel: 'Vel 3', desc: 'Carimbo nas áreas de cicatriz próximas ao nariz.' },
+      { area: 'BOCHECHAS — poros', prof: '0,75mm', vel: 'Vel 3', desc: 'Deslizar. Cobertura geral.' },
+      { area: 'NARIZ', prof: '0,5–0,75mm', vel: 'Vel 2', desc: 'Passes curtos e precisos.' },
+      { area: 'MANDÍBULA', prof: '1,0mm', vel: 'Vel 3', desc: 'Deslizar. Divide esquerda e direita.' },
+      { area: 'PESCOÇO', prof: '0,75–1,0mm', vel: 'Vel 2', desc: 'Passes de cima para baixo.' },
+    ]
+  },
+  '36p': {
+    label: '36 pinos',
+    obs: 'Renovação de textura geral em áreas amplas. Mais trauma mecânico — recuperação um pouco mais longa. Não usar nas cicatrizes profundas.',
+    regioes: [
+      { area: 'TESTA', prof: '0,75–1,0mm', vel: 'Vel 3–4', desc: 'Deslizar. Cobertura ampla eficiente.' },
+      { area: 'BOCHECHAS — textura geral', prof: '0,5–0,75mm', vel: 'Vel 3', desc: 'Deslizar. Evitar as áreas de cicatriz profunda.' },
+      { area: 'MANDÍBULA', prof: '0,75–1,0mm', vel: 'Vel 3', desc: 'Deslizar. Firmeza e definição.' },
+      { area: 'PESCOÇO', prof: '0,75–1,0mm', vel: 'Vel 3', desc: 'Passes de cima para baixo. Excelente para textura do pescoço.' },
+    ]
+  },
+  '42p': {
+    label: '42 pinos',
+    obs: 'Máxima densidade. Renovação superficial ampla. Não usar nas cicatrizes — a densidade reduz a profundidade efetiva por canal. Reservar para manutenção de textura geral.',
+    regioes: [
+      { area: 'TESTA', prof: '0,5–0,75mm', vel: 'Vel 3', desc: 'Deslizar. Textura e poros.' },
+      { area: 'PESCOÇO', prof: '0,5–0,75mm', vel: 'Vel 3', desc: 'Renovação superficial ampla. Ótimo para textura.' },
+      { area: 'MANDÍBULA', prof: '0,75mm', vel: 'Vel 3', desc: 'Firmeza superficial e textura.' },
+    ]
+  }
+};
+
+function selectCart(key, btn) {
+  document.querySelectorAll('.cart-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const data = CART_DATA[key];
+  let html = `<div style="font-size:12px;color:var(--warn);padding:10px 0 14px;border-bottom:1px solid var(--border);margin-bottom:4px">${data.obs}</div>`;
+  data.regioes.forEach(r => {
+    html += `<div class="step">
+      <div class="step-num" style="font-size:8px;width:32px;height:32px">${r.area.split(' ')[0].substring(0,5).toUpperCase()}</div>
+      <div>
+        <div class="step-name">${r.area} · ${r.prof} · ${r.vel}</div>
+        <div class="step-desc">${r.desc}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('prof-detail').innerHTML = html;
+}
+
+init();
+selectCart('nano', document.querySelector('.cart-btn'));
+</script>
+</body>
+</html>
